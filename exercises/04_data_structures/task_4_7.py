@@ -10,3 +10,9 @@
 """
 
 mac = "AAAA:BBBB:CCCC"
+tochka1 = ''
+tochka2 = ''
+net_dvoetochie = (f'AAAA{tochka1}BBBB{tochka2}CCCC')
+new = bin(int(net_dvoetochie, 16))
+print(new)
+
