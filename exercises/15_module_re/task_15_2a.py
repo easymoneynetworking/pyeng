@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Задание 15.2a
 
 Создать функцию convert_to_dict, которая ожидает два аргумента:
@@ -24,6 +24,6 @@
 Функцию parse_sh_ip_int_br не нужно копировать.
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
-'''
+"""
 
-headers = ['interface', 'address', 'status', 'protocol']
+headers = ["interface", "address", "status", "protocol"]

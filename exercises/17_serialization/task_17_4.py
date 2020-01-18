@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Задание 17.4
 
 Создать функцию write_last_log_to_csv.
@@ -34,7 +34,7 @@ C-3PO,c3po@gmail.com,16/12/2019 17:24
 
 Функцию convert_datetimestr_to_datetime использовать не обязательно.
 
-'''
+"""
 
 import datetime
 
@@ -43,5 +43,4 @@ def convert_datetimestr_to_datetime(datetime_str):
     """
     Конвертирует строку с датой в формате 11/10/2019 14:05 в объект datetime.
     """
-    return datetime.datetime.strptime(datetime_str, '%d/%m/%Y %H:%M')
-
+    return datetime.datetime.strptime(datetime_str, "%d/%m/%Y %H:%M")

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Задание 17.3b
 
 Создать функцию transform_topology, которая преобразует топологию в формат подходящий для функции draw_topology.
@@ -30,4 +30,4 @@
 > И модуль python для работы с graphviz:
 > pip install graphviz
 
-'''
+"""

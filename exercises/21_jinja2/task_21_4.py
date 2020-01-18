@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Задание 21.4
 
 Создайте шаблон templates/add_vlan_to_switch.txt, который будет использоваться
@@ -28,4 +28,4 @@ interface Gi0/10
 Проверьте шаблон templates/add_vlan_to_switch.txt на данных в файле data_files/add_vlan_to_switch.yaml, с помощью функции generate_config из задания 21.1.
 Не копируйте код функции generate_config.
 
-'''
+"""

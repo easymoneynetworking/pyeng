@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Задание 9.1
 
 Создать функцию, которая генерирует конфигурацию для access-портов.
@@ -41,29 +41,27 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
-'''
+"""
 
 access_mode_template = [
-    'switchport mode access', 'switchport access vlan',
-    'switchport nonegotiate', 'spanning-tree portfast',
-    'spanning-tree bpduguard enable'
+    "switchport mode access",
+    "switchport access vlan",
+    "switchport nonegotiate",
+    "spanning-tree portfast",
+    "spanning-tree bpduguard enable",
 ]
 
-access_config = {
-    'FastEthernet0/12': 10,
-    'FastEthernet0/14': 11,
-    'FastEthernet0/16': 17
-}
+access_config = {"FastEthernet0/12": 10, "FastEthernet0/14": 11, "FastEthernet0/16": 17}
 
 access_config_2 = {
-    'FastEthernet0/03': 100,
-    'FastEthernet0/07': 101,
-    'FastEthernet0/09': 107
+    "FastEthernet0/03": 100,
+    "FastEthernet0/07": 101,
+    "FastEthernet0/09": 107,
 }
 
 
 def generate_access_config(intf_vlan_mapping, access_template):
-    '''
+    """
     intf_vlan_mapping - словарь с соответствием интерфейс-VLAN такого вида:
         {'FastEthernet0/12':10,
          'FastEthernet0/14':11,
@@ -71,5 +69,4 @@ def generate_access_config(intf_vlan_mapping, access_template):
     access_template - список команд для порта в режиме access
 
     Возвращает список всех портов в режиме access с конфигурацией на основе шаблона
-    '''
-
+    """

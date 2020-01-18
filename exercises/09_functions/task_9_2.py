@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Задание 9.2
 
 Создать функцию generate_trunk_config, которая генерирует конфигурацию для trunk-портов.
@@ -35,22 +35,22 @@
 
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
-'''
+"""
 
 trunk_mode_template = [
-    'switchport mode trunk', 'switchport trunk native vlan 999',
-    'switchport trunk allowed vlan'
+    "switchport mode trunk",
+    "switchport trunk native vlan 999",
+    "switchport trunk allowed vlan",
 ]
 
 trunk_config = {
-    'FastEthernet0/1': [10, 20, 30],
-    'FastEthernet0/2': [11, 30],
-    'FastEthernet0/4': [17]
+    "FastEthernet0/1": [10, 20, 30],
+    "FastEthernet0/2": [11, 30],
+    "FastEthernet0/4": [17],
 }
 
 trunk_config_2 = {
-    'FastEthernet0/11': [120, 131],
-    'FastEthernet0/15': [111, 130],
-    'FastEthernet0/14': [117]
+    "FastEthernet0/11": [120, 131],
+    "FastEthernet0/15": [111, 130],
+    "FastEthernet0/14": [117],
 }
-

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Задание 22.1
 
 Создать функцию parse_command_output. Параметры функции:
@@ -12,5 +12,4 @@
 
 Проверить работу функции на выводе команды output/sh_ip_int_br.txt и шаблоне templates/sh_ip_int_br.template.
 
-'''
-
+"""

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Задание 19.2a
 
 Скопировать функцию send_config_commands из задания 19.2 и добавить параметр log,
@@ -18,4 +18,4 @@ In [14]: result = send_config_commands(r1, commands, log=False)
 In [15]:
 
 Скрипт должен отправлять список команд commands на все устройства из файла devices.yaml с помощью функции send_config_commands.
-'''
+"""

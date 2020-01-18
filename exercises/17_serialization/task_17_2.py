@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Задание 17.2
 
 В этом задании нужно:
@@ -37,11 +37,11 @@
 Вы можете раскомментировать строку print(sh_version_files), чтобы посмотреть содержимое списка.
 
 Кроме того, создан список заголовков (headers), который должен быть записан в CSV.
-'''
+"""
 
 import glob
 
-sh_version_files = glob.glob('sh_vers*')
-#print(sh_version_files)
+sh_version_files = glob.glob("sh_vers*")
+# print(sh_version_files)
 
-headers = ['hostname', 'ios', 'image', 'uptime']
+headers = ["hostname", "ios", "image", "uptime"]

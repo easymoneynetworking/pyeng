@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Задание 19.2b
 
 Скопировать функцию send_config_commands из задания 19.2a и добавить проверку на ошибки.
@@ -91,10 +91,10 @@ R1(config)#logging
 
 R1(config)#a
 % Ambiguous command:  "a"
-'''
+"""
 
 # списки команд с ошибками и без:
-commands_with_errors = ['logging 0255.255.1', 'logging', 'a']
-correct_commands = ['logging buffered 20010', 'ip http server']
+commands_with_errors = ["logging 0255.255.1", "logging", "a"]
+correct_commands = ["logging buffered 20010", "ip http server"]
 
 commands = commands_with_errors + correct_commands
