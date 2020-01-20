@@ -24,32 +24,32 @@ $ python task_5_1c.py
 То есть эту задачу можно решить без использования условия if.
 """
 variable1 = input('Введите имя устройства: ')
-
 london_co = {
-    "r1": {
-        "location": "21 New Globe Walk",
-        "vendor": "Cisco",
-        "model": "4451",
-        "ios": "15.4",
-        "ip": "10.255.0.1",
-    },
-    "r2": {
-        "location": "21 New Globe Walk",
-        "vendor": "Cisco",
-        "model": "4451",
-        "ios": "15.4",
-        "ip": "10.255.0.2",
-    },
-    "sw1": {
-        "location": "21 New Globe Walk",
-        "vendor": "Cisco",
-        "model": "3850",
-        "ios": "3.6.XE",
-        "ip": "10.255.0.101",
-        "vlans": "10,20,30",
-        "routing": True,
-    },
+        "r1": {
+                    "location": "21 New Globe Walk",
+                    "vendor": "Cisco",
+                    "model": "4451",
+                    "ios": "15.4",
+                    "ip": "10.255.0.1",
+                },
+        "r2": {
+                    "location": "21 New Globe Walk",
+                    "vendor": "Cisco",
+                    "model": "4451",
+                    "ios": "15.4",
+                    "ip": "10.255.0.2",
+                },
+        "sw1": {
+                    "location": "21 New Globe Walk",
+                    "vendor": "Cisco",
+                    "model": "3850",
+                    "ios": "3.6.XE",
+                    "ip": "10.255.0.101",
+                    "vlans": "10,20,30",
+                    "routing": True,
+                },
 }
+
 #Вот тут начался мозговой штурм,как словарь и строку обьединить.А видимо никак,нужно словарь преоброзовать в строку
 #Первым действием обращаюсь к методу keys и преоброзовать вывод в строку для последующего обьединения
 list_keys = list(london_co[variable1].keys())
@@ -60,6 +60,9 @@ list_str = str(list_keys)
 new_variable2 = list_str.replace('[','(').replace('\'', '').replace(']',')')
 #print(new_variable2)
 #Теперь собственно обьединяем строки с помощью формат и в конце записываем двоеточие
-hren = input('Введите имя параметра {}{} '.format(new_variable2, ':'))
-print(london_co[variable1][hren])
+variable7 = input('Введите имя параметра {}{} '.format(new_variable2, ':'))
+params = london_co[variable1]
+print(params.get(variable7, 'Такого параметра нет'))
+
+
 
