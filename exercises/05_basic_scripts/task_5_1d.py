@@ -60,3 +60,14 @@ variable7 = input('Введите имя параметра {}{} '.format(new_va
 variable8 = variable7.lower()
 params = london_co[variable1]
 print(params.get(variable8, 'Такого параметра нет'))
+
+# Все отлично
+
+# вариант решения
+
+device = input("Введите имя устройства: ")
+params = ", ".join(london_co[device].keys())
+parameter = str.lower(input(f"Введите имя параметра ({params}): "))
+
+print(london_co[device].get(parameter, "Такого параметра нет"))
+

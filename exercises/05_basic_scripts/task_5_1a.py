@@ -48,3 +48,6 @@ london_co = {
 }
 
 print(london_co[device][param])
+
+# Все отлично
+

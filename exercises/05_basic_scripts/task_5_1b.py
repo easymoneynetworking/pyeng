@@ -59,3 +59,14 @@ new_variable2 = list_str.replace('[','(').replace('\'', '').replace(']',')')
 #Теперь собственно обьединяем строки с помощью формат и в конце записываем двоеточие
 hren = input('Введите имя параметра {}{} '.format(new_variable2, ':'))
 print(london_co[variable1][hren])
+
+# Все отлично
+
+# вариант решения
+
+device = input("Введите имя устройства: ")
+params = ", ".join(london_co[device].keys())
+parameter = input(f"Введите имя параметра ({params}): ")
+
+print(london_co[device][parameter])
+

@@ -47,3 +47,6 @@ london_co = {
     },
 }
 print(london_co[device])
+
+# Все отлично
+
