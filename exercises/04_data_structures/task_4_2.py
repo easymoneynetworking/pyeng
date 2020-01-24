@@ -9,7 +9,5 @@
 """
 
 mac = "AAAA:BBBB:CCCC"
-tochka1 = '.'
-tochka2 = '.'
-print(f'AAAA{tochka1}BBBB{tochka2}CCCC')
+print(mac.replace(':', '.'))
 
