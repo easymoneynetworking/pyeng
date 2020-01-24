@@ -42,3 +42,24 @@ peresechenie = set1.intersection(set2)
 list = list(peresechenie)
 print(list)
 
+
+# Все отлично
+# только вот set примененный к строке помог в этом случае потому что все числа были < 10
+# если бы числа были >= 10, то примерение set дало бы такой результат
+#In [1]: vlans = '1,2,3,10,15'
+
+#In [2]: set(vlans)
+#Out[2]: {',', '0', '1', '2', '3', '5'}
+
+# вланов 10 и 15 нет, так как set превращает строку в множество из символов
+
+# вариант решения
+
+command1 = "switchport trunk allowed vlan 1,2,3,5,8"
+command2 = "switchport trunk allowed vlan 1,3,8,9"
+
+vlans1 = command1.split()[-1].split(",")
+vlans2 = command2.split()[-1].split(",")
+
+intersection = sorted(set(vlans1) & set(vlans2))
+print(intersection)

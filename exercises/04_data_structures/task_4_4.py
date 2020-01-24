@@ -19,3 +19,14 @@ vlan_unique_list = list(unique_vlans)
 vlan_sorted = sorted(vlan_unique_list)
 print(vlan_sorted)
 
+
+# Все отлично
+
+# вариант решения
+
+vlans = [10, 20, 30, 1, 2, 100, 10, 30, 3, 4, 10]
+
+result = sorted(set(vlans))
+print(result)
+
+# sorted всегда возвращает список, поэтому list можно не использовать

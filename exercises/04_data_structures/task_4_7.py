@@ -16,3 +16,15 @@ net_dvoetochie = (f'AAAA{tochka1}BBBB{tochka2}CCCC')
 new = bin(int(net_dvoetochie, 16))
 print(new)
 
+
+# Все правильно, кроме того что вручную написан MAC-адрес
+
+# вариант решения
+mac = "AAAA:BBBB:CCCC"
+
+bin_mac = bin(int(mac.replace(":", ""), 16))[2:]
+print(bin_mac)
+
+### Преобразование с помощью форматирования строк
+bin_mac = "{:b}".format(int(mac.replace(":", ""), 16))
+print(bin_mac)

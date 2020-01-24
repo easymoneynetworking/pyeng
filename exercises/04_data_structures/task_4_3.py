@@ -14,3 +14,5 @@ all_config = config.split()
 vlans = all_config[-1].split(',')
 print(vlans)
 
+
+# Все отлично
