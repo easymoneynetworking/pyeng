@@ -67,9 +67,6 @@ trunk_template = [
 
 user_dict = {'access_template': access_template, 'trunk_template': trunk_template}
 test10 = (user_dict[test])
-#test11 = (str(test10))
-#print(test11)
-#test12 = test11.split(',')
 
 
 print('\n' + ' ' * 30)
