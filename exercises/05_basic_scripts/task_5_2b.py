@@ -58,3 +58,12 @@ Mask:
 """
 
 print(output.format(take_oktet0, take_oktet1, take_oktet2, take_oktet3, int(ip_address2[4]), maska5[0], maska5[1], maska5[2], maska5[3], maska9, maska10, maska11, maska12 ))
+
+# Все отлично
+
+# немного другой вариант начала
+
+from sys import argv
+
+ip, mask = argv[1].split("/")
+mask = int(mask)
