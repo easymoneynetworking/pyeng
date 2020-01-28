@@ -41,3 +41,17 @@ print('\n' + ' ' * 30)
 print('interface {}'.format(interface))
 print('\n'.join(key_mode).format(vlan))
 
+
+# Все отлично
+
+# вариант решения
+
+template = {"access": access_template, "trunk": trunk_template}
+question = {"access": "Enter VLAN number:", "trunk": "Enter allowed VLANs:"}
+
+mode = input("Enter interface mode (access/trunk): ")
+interface = input("Enter interface type and number: ")
+vlans = input(question[mode])
+
+print("interface {}".format(interface))
+print("\n".join(template[mode]).format(vlans))

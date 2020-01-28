@@ -73,3 +73,16 @@ print('\n' + ' ' * 30)
 print('interface {}'.format(interface))
 print('\n'.join(test10).format(vlan))
 
+
+# Все отлично
+
+# вариант решения
+
+template = {"access": access_template, "trunk": trunk_template}
+
+mode = input("Enter interface mode (access/trunk): ")
+interface = input("Enter interface type and number: ")
+vlans = input("Enter vlan(s): ")
+
+print(f"interface {interface}")
+print("\n".join(template[mode]).format(vlans))
