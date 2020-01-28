@@ -16,7 +16,11 @@ mac = ["aabb:cc80:7000", "aabb:dd80:7340", "aabb:ee80:7000", "aabb:ff80:7000"]
 mac_cisco = []
 
 for macs in mac:
+    # тут не надо применять str, так как macs строка
     new = str(macs).replace(":",".")
     mac_cisco.append(new)
 
 print('mac_cisco = {}'.format(mac_cisco))
+
+# Все отлично
+
