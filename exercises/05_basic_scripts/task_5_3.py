@@ -44,6 +44,12 @@ switchport trunk encapsulation dot1q
 switchport mode trunk
 switchport trunk allowed vlan 2,3,4,5
 """
+type_interface = input('Enter interface type access/trunk: ')
+interface = input('Enter interface name: ')
+vlan = input('Enter VLAN number: ')
+
+test = type_interface  + '_template'
+
 
 access_template = [
     "switchport mode access",
@@ -58,3 +64,12 @@ trunk_template = [
     "switchport mode trunk",
     "switchport trunk allowed vlan {}",
 ]
+
+user_dict = {'access_template': access_template, 'trunk_template': trunk_template}
+test10 = (user_dict[test])
+
+
+print('\n' + ' ' * 30)
+print('interface {}'.format(interface))
+print('\n'.join(test10).format(vlan))
+
