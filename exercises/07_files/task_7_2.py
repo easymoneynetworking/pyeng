@@ -12,3 +12,11 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
+
+from sys import argv
+
+with open(argv[1], 'r') as f:
+    for test in f:
+        a = test.replace('!','')
+        line = a.rstrip('\n')
+        print(line)
