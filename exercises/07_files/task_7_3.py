@@ -17,3 +17,16 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+
+with open('CAM_table.txt', 'r') as f:
+    for line in f:
+        words = line.split()
+        dig = True
+        if words:
+            if words[0].isdigit() == False:
+                dig = False
+        elif not words:
+            dig = False
+        if dig == True:
+            print("{:<10}{:<20}{:<10}".format(words[0],words[1],words[3]))
+

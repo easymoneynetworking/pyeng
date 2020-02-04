@@ -23,3 +23,16 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+lines = []
+
+with open('CAM_table.txt', 'r') as f:
+    for line in f:
+        words = line.split()
+        dig = True
+        if words:
+            if words[0].isdigit() == True:
+                words[0] = int(words[0])
+                lines.append(words)
+line = sorted(lines)
+for words in line:
+    print("{:<10}{:<20}{:<10}".format((words[0]),words[1],words[3]))

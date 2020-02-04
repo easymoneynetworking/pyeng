@@ -17,3 +17,18 @@
 """
 
 ignore = ["duplex", "alias", "Current configuration"]
+
+from sys import argv
+
+with open(argv[1], 'r') as src, open(argv[2], 'w') as dest:
+        for file1 in src:
+            line = file1
+            ignore_line = False
+            for word in ignore:
+                if word in line:
+                    ignore_line = True
+            if ignore_line == True:
+                pass
+            elif ignore_line == False:
+                dest.write(line)
+

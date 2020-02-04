@@ -14,3 +14,16 @@ Outbound Interface:    FastEthernet0/0
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+with open('ospf.txt', 'r') as f:
+    for stroka in f:
+        new = stroka.replace(",", " ").replace("[", "").replace("]", "")
+        _, route, metric, _, hop, last, intf  = new.split()
+        output = "\n{:25} {}" * 6
+        print(output.format(
+                        "Protocol:", "OSPF",
+                        "Prefix:", route,
+                        "AD/Metric:", metric,
+                        "Next-Hop:", hop,
+                        "Last update:", last,
+                        "Outbound Interface:", intf,
+                        ))
