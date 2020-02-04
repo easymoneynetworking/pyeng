@@ -20,3 +20,16 @@ with open(argv[1], 'r') as f:
         a = test.replace('!','')
         line = a.rstrip('\n')
         print(line)
+
+# Все отлично
+
+# вариант решения
+
+from sys import argv
+
+filename = argv[1]
+
+with open(filename) as f:
+    for line in f:
+        if not line.startswith("!"):
+            print(line.rstrip())

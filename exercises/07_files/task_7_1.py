@@ -27,3 +27,6 @@ with open('ospf.txt', 'r') as f:
                         "Last update:", last,
                         "Outbound Interface:", intf,
                         ))
+
+# Все отлично
+

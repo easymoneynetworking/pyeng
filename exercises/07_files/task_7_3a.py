@@ -36,3 +36,19 @@ with open('CAM_table.txt', 'r') as f:
 line = sorted(lines)
 for words in line:
     print("{:<10}{:<20}{:<10}".format((words[0]),words[1],words[3]))
+
+# Все отлично
+
+# вариант решения
+
+mac_table = []
+
+with open("CAM_table.txt", "r") as conf:
+    for line in conf:
+        line = line.split()
+        if line and line[0].isdigit():
+            vlan, mac, _, intf = line
+            mac_table.append([int(vlan), mac, intf])
+
+for vlan, mac, intf in sorted(mac_table):
+    print(f"{vlan:<9}{mac:20}{intf}")

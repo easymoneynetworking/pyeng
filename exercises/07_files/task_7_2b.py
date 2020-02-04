@@ -31,3 +31,6 @@ with open(argv[1], 'r') as src, open('config_sw1_cleared.txt', 'w') as dest:
             elif ignore_line == False:
                 dest.write(line)
 
+
+# Все отлично
+

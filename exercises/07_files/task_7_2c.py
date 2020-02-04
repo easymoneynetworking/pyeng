@@ -32,3 +32,6 @@ with open(argv[1], 'r') as src, open(argv[2], 'w') as dest:
             elif ignore_line == False:
                 dest.write(line)
 
+
+# Все отлично
+

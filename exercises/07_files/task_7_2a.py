@@ -30,3 +30,19 @@ with open(argv[1], 'r') as f:
                 pass
             elif ignore_line == False:
                 print(line)
+
+# Все отлично
+
+# вариант решения
+
+filename = "config_sw1.txt"
+
+with open(filename) as f:
+    for line in f:
+        skip_line = False
+        for ignore_word in ignore:
+            if ignore_word in line:
+                skip_line = True
+                break
+        if not line.startswith("!") and not skip_line:
+            print(line.rstrip())

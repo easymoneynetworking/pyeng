@@ -30,3 +30,15 @@ with open('CAM_table.txt', 'r') as f:
         if dig == True:
             print("{:<10}{:<20}{:<10}".format(words[0],words[1],words[3]))
 
+
+# Все отлично
+
+# вариант решения
+
+with open("CAM_table.txt", "r") as conf:
+    for line in conf:
+        line = line.split()
+        if line and line[0].isdigit():
+            vlan, mac, _, interface = line
+            print(f"{vlan:9}{mac:20}{interface}")
+
