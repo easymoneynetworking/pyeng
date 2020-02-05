@@ -11,3 +11,14 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+
+mac_table = []
+ask = input('Enter Vlan number: ')
+
+with open("CAM_table.txt", "r") as conf:
+    for line in conf:
+        line = line.split()
+        if line and line[0].isdigit():
+            if line[0] == ask:
+                vlan, mac, _, intf = line
+                print(f"{vlan:<9}{mac:20}{intf}")
