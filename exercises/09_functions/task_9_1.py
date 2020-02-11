@@ -79,4 +79,22 @@ def generate_access_config(intf_vlan_mapping, access_template):
             else:
                 command_list.append(f'{command}')
     return command_list
+
+
 print(generate_access_config(access_config_2, access_mode_template))
+
+# Все отлично
+
+# вариант решения
+
+
+def generate_access_config(intf_vlan_mapping, access_template):
+    access_config = []
+    for intf, vlan in intf_vlan_mapping.items():
+        access_config.append(f"interface {intf}")
+        for command in access_template:
+            if command.endswith("access vlan"):
+                access_config.append(f"{command} {vlan}")
+            else:
+                access_config.append(command)
+    return access_config

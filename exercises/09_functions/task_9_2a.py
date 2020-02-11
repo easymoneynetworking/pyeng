@@ -38,6 +38,9 @@ def generate_trunk_config(intf_vlan_mapping, trunk_template):
                 command_list.append(f'{command}')
         command_dic[intf] = command_list
     return command_dic
+
+
 print(generate_trunk_config(trunk_config, trunk_mode_template))
 
+# Все отлично
 
