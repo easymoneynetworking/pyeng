@@ -49,3 +49,26 @@ def parse_cdp_neighbors(command_output):
 with open('sh_cdp_n_sw1.txt','r') as f:
     a = f.read()
     pprint(parse_cdp_neighbors(a))
+
+# Все отлично
+
+# вариант решения
+
+
+def parse_cdp_neighbors(command_output):
+    result = {}
+    for line in command_output.split("\n"):
+        line = line.strip()
+        if ">" in line:
+            hostname = line.split(">")[0]
+        # отобрать нужные строки можно по последнему столбцу
+        # последний символ число - номер интерфейса
+        elif line and line[-1].isdigit():
+            r_host, l_int, l_int_num, *other, r_int, r_int_num = line.split()
+            result[(hostname, l_int + l_int_num)] = (r_host, r_int + r_int_num)
+    return result
+
+
+if __name__ == "__main__":
+    with open("sh_cdp_n_sw1.txt", "r") as show_in:
+        print(parse_cdp_neighbors(show_in.read()))
