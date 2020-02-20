@@ -34,9 +34,31 @@ Cгенерировать топологию, которая соответст�
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 > Для выполнения этого задания, должен быть установлен graphviz:
-> apt-get install graphviz
+> apt-get install graphvizi
 
 > И модуль python для работы с graphviz:
 > pip install graphviz
 
 """
+
+
+from pprint import pprint
+from draw_network_graph import draw_topology
+from task_11_1 import parse_cdp_neighbors
+ 
+def create_network_map(filenames):
+    result = {}
+    for i in filenames:
+        with open(i, 'r') as test:
+            a = test.read()
+            t = parse_cdp_neighbors(a)
+            for key,values in t.items():
+                if values not in result:
+                    result[key] = values
+    return result
+
+lists = ['sh_cdp_n_sw1.txt','sh_cdp_n_r1.txt','sh_cdp_n_r2.txt','sh_cdp_n_r3.txt']
+#print(create_network_map(lists))
+
+vizof = create_network_map(lists)
+draw_topology(vizof)
