@@ -58,7 +58,4 @@ def create_network_map(filenames):
     return result
 
 lists = ['sh_cdp_n_sw1.txt','sh_cdp_n_r1.txt','sh_cdp_n_r2.txt','sh_cdp_n_r3.txt']
-#print(create_network_map(lists))
-
-vizof = create_network_map(lists)
-draw_topology(vizof)
+print(create_network_map(lists))
