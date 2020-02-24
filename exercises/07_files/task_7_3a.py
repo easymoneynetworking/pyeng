@@ -33,6 +33,7 @@ with open('CAM_table.txt', 'r') as f:
             if words[0].isdigit() == True:
                 words[0] = int(words[0])
                 lines.append(words)
-line = sorted(lines)
-for words in line:
-    print("{:<10}{:<20}{:<10}".format((words[0]),words[1],words[3]))
+                line = sorted(lines)
+                print("{:<10}{:<20}{:<10}".format((words[0]),words[1],words[3]))
+#for words in line:
+#    print("{:<10}{:<20}{:<10}".format((words[0]),words[1],words[3]))

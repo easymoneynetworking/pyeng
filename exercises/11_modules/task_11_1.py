@@ -36,16 +36,23 @@ from pprint import pprint
 def parse_cdp_neighbors(command_output):
     test = command_output.split('\n')
     dictionary = {}
+    flag = False
     for cdp in test:
         if '>' in cdp:
             r4 =  cdp.split('>')[0]
-        elif cdp.startswith('R'):
+        elif cdp.startswith('Device ID'):
+            flag = True
+            continue
+        elif flag and cdp:
             name, l_intf, l_n_intf, *other, r_intf = cdp.split()
             local_interface = l_intf + l_n_intf
             dest_interface = l_intf + r_intf
             dictionary[(r4,local_interface)] = (name,dest_interface)
     return dictionary
 
+'''
+if __name__ == '__main__':
 with open('sh_cdp_n_sw1.txt','r') as f:
     a = f.read()
     pprint(parse_cdp_neighbors(a))
+'''
