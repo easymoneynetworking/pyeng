@@ -23,3 +23,13 @@ Reachable    Unreachable
 
 Для этого задания нет тестов
 """
+from tabulate import tabulate
+
+def print_ip_table(reach,unreach):
+    ip = [reach,unreach]
+    print(tabulate(ip, headers=['Reachable', 'Unreachable']))
+    return ip
+
+dic_reach = ['10.1.1.1','10.1.1.7']
+dic_unreach = ['10.1.1.2','10.1.1.8 \n10.1.1.9']
+print_ip_table(dic_reach,dic_unreach)
