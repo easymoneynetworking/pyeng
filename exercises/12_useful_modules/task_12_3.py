@@ -33,3 +33,14 @@ def print_ip_table(reach,unreach):
 dic_reach = ['10.1.1.1','10.1.1.7']
 dic_unreach = ['10.1.1.2','10.1.1.8 \n10.1.1.9']
 print_ip_table(dic_reach,dic_unreach)
+
+# Все отлично
+
+# вариант решения
+from tabulate import tabulate
+
+
+def print_ip_table(reach_ip, unreach_ip):
+    table = {"Reachable": reach_ip, "Unreachable": unreach_ip}
+    print(tabulate(table, headers="keys"))
+

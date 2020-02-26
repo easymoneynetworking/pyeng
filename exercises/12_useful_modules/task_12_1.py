@@ -43,3 +43,6 @@ def ping_ip_addresses(ip_address):
 if __name__ == '__main__':
     lists_ip = ["1.1.1", "8.8.8.8", "8.8.4.4", "8.8.7.1"]
     print(ping_ip_addresses(lists_ip))
+
+# Все отлично
+
