@@ -37,4 +37,14 @@ def convert_to_dict(lists, list_of_tuples):
         dct = dict(zip(lists,c))
         spisok.append(dct)
     return spisok
+
+
 pprint(convert_to_dict(headers,parse_sh_ip_int_br('sh_ip_int_br.txt')))
+
+# Все отлично
+
+# вариант решения
+
+
+def convert_to_dict(headers, sh_list):
+    return [dict(zip(headers, i)) for i in sh_list]
