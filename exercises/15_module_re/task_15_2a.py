@@ -25,5 +25,16 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
-
+from task_15_2 import parse_sh_ip_int_br
 headers = ["interface", "address", "status", "protocol"]
+from pprint import pprint
+
+def convert_to_dict(lists, list_of_tuples):
+    spisok = []
+    for a in list_of_tuples:
+        b = list(a)
+        c = list(b)
+        dct = dict(zip(lists,c))
+        spisok.append(dct)
+    return spisok
+pprint(convert_to_dict(headers,parse_sh_ip_int_br('sh_ip_int_br.txt')))
