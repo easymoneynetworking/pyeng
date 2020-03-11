@@ -24,3 +24,18 @@ description Connected to SW1 port Eth 0/1
 
 Проверить работу функции на файле sh_cdp_n_sw1.txt.
 """
+import re
+from pprint import pprint
+regex = r'(?P<device>\S\d) +(?P<local_interface>\S+ [\d/]+) +\d+ +\w \w \w +\d+ +(?P<dest_interface>\S+ [\d/]+)'
+
+def generate_description_from_cdp(filename):
+    result = {}
+    with open(filename) as f:
+        for m in re.finditer(regex, f.read()):
+            device = m.group('device')
+            interface_local = m.group('local_interface')
+            interface_dest = m.group('dest_interface')
+            stri = f'description Connected to {device} port {interface_dest}'
+            result[interface_local] = stri
+    return result
+generate_description_from_cdp('sh_cdp_n_sw1.txt')
