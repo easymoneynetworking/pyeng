@@ -40,8 +40,50 @@
 """
 
 import glob
+import re
+from pprint import pprint
+import csv
 
 sh_version_files = glob.glob("sh_vers*")
-# print(sh_version_files)
+#print(sh_version_files)
 
 headers = ["hostname", "ios", "image", "uptime"]
+
+def parse_sh_version(vivod_version):
+    regex= (r'Version (?P<ios>[\d.]+[(]\w+[)]\w+)'
+            r'.+router uptime is (?P<uptime>\d+ \w+, \d+ \w+, \d+ \w+)'
+            r'.+image file is "(?P<image>\S+)".+')
+    match = re.finditer(regex, vivod_version, re.DOTALL)
+    for m in match:
+        ios = m.group(1)
+        uptime = m.group(2)
+        image = m.group(3)
+    return ios,image,uptime
+
+
+def write_inventory_to_csv(data_filenames,csv_filename):
+    finish_list = []
+    regex2 = r'sh_version_(\w+).txt'
+    finish_list.append(headers)
+    for a in data_filenames:
+        match2 = re.search(regex2, a)
+        if match2:
+            hostname = match2.group(1)
+        with open(a, 'r') as f:
+            routers = []
+            sh_ver = f.read()
+            routers.append(hostname)
+            ios, image, uptime = parse_sh_version(sh_ver)
+            routers.append(ios)
+            routers.append(image)
+            routers.append(uptime)
+            finish_list.append(routers)
+    with open(csv_filename,'wt') as fw:
+        writer = csv.writer(fw)
+        for row in finish_list:
+            writer.writerow(row)
+
+if __name__ == '__main__':
+    write_inventory_to_csv(sh_version_files,'routers_inventory.csv')
+
+
