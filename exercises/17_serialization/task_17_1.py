@@ -28,3 +28,51 @@ sw3,00:E9:22:11:A6:50,100.1.1.7,3,FastEthernet0/21
 Первый столбец в csv файле имя коммутатора надо получить из имени файла, остальные - из содержимого в файлах.
 
 """
+
+import re
+from pprint import pprint
+import csv
+import glob
+
+dhcp_snoop_files = glob.glob("*_dhcp_snooping.txt")
+#pprint(dhcp_snoop_files)
+
+def write_dhcp_snooping_to_csv(filenames,output):
+    finish_list = []
+    headers = ['switch','mac','ip','vlan','interface']
+    switch_regex = r'(?P<device>sw\d+)\S+'
+    attribute_regex = (r'(?P<mac>\w+:\w+:\w+:\w+:\w+:\w+) +'
+                      r'(?P<ip>\d+[.]\d+[.]\d+[.]\d+) +'
+                      r'\w+ +\w+[-]\w+ +(?P<vlan>\d+) +'
+                      r'(?P<interface>\w+\d+[/]\d+)')
+    finish_list.append(headers)
+    for f in filenames:
+        switch_match = re.search(switch_regex, f)
+        if switch_match:
+            hostname = switch_match.group('device')
+        with open(f, 'r')as fi:
+            all_file = re.finditer(attribute_regex, fi.read())
+            for all_files in all_file:
+                device = []
+                device.append(hostname)
+                mac = all_files.group('mac')
+                ip =  all_files.group('ip')
+                vlan = all_files.group('vlan')
+                interface = all_files.group('interface')
+                device.append(mac)
+                device.append(ip)
+                device.append(vlan)
+                device.append(interface)
+                finish_list.append(device)
+    with open(output, 'w')as csv_f:
+        writer = csv.writer(csv_f)
+        for row in finish_list:
+            writer.writerow(row)
+
+if __name__ == '__main__':
+    (write_dhcp_snooping_to_csv(dhcp_snoop_files,'csv_file'))
+
+
+
+
+
