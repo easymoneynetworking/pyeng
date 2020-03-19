@@ -32,3 +32,41 @@
 Проверить работу параметра save_to_filename и записать итоговый словарь в файл topology.yaml.
 
 """
+import re
+from pprint import pprint
+import yaml
+import glob
+
+show_cdp_neighbor = glob.glob("sh_cdp_n_*.txt")
+#pprint(show_cdp_neighbor)
+
+def generate_topology_from_cdp(list_of_files,save_to_filename=None):
+    result_dic = {}
+    regex_attributes = (r'(?P<device>\S+) +(?P<local_interface>\w+ \d+/\d+) +'
+                        r'\d+ +R? \S+ \S+ +\D+\d+\D +'
+                        r'(?P<dest_interface>\w+ \d+/\d+)')
+    regex_device = r'sh_cdp_n_(?P<device_local>\S+).txt'
+    for  f in list_of_files:
+        switch_match = re.search(regex_device, f)
+        hostname = switch_match.group('device_local')
+        hostname_upper_register = hostname.upper()
+        result_dic[hostname_upper_register] = {}
+        with open(f, 'r')as fi:
+            for string in re.finditer(regex_attributes, fi.read()):
+                local_interface = string.group('local_interface')
+                result_dic[hostname_upper_register][local_interface] = {}
+                device_dest = string.group('device')
+                dest_interface = string.group('dest_interface')
+                result_dic[hostname_upper_register][local_interface][device_dest] = dest_interface
+    to_yaml = result_dic
+    if save_to_filename:
+        with open(save_to_filename, 'w') as fil:
+            yaml.dump(to_yaml, fil)
+    return result_dic
+
+
+
+if __name__ == "__main__":
+    pprint(generate_topology_from_cdp(show_cdp_neighbor,'cdp_neigbors.yml'))
+
+
