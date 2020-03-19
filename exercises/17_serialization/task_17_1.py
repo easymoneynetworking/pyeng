@@ -55,16 +55,10 @@ def write_dhcp_snooping_to_csv(filenames,output):
             for all_files in all_file:
                 device = []
                 device.append(hostname)
-                mac = all_files.group('mac')
-                ip =  all_files.group('ip')
-                vlan = all_files.group('vlan')
-                interface = all_files.group('interface')
-                device.append(mac)
-                device.append(ip)
-                device.append(vlan)
-                device.append(interface)
+                params = all_files.group('mac', 'ip', 'vlan', 'interface')
+                device.extend(params)
                 finish_list.append(device)
-    with open(output, 'w')as csv_f:
+    with open(output, 'w') as csv_f:
         writer = csv.writer(csv_f)
         for row in finish_list:
             writer.writerow(row)
@@ -72,7 +66,29 @@ def write_dhcp_snooping_to_csv(filenames,output):
 if __name__ == '__main__':
     (write_dhcp_snooping_to_csv(dhcp_snoop_files,'csv_file'))
 
+# Все отлично, немного изменила
+
+# вариант решения
+import csv
+import re
+import glob
 
 
+def write_dhcp_snooping_to_csv(filenames, output):
+    regex = r"(\S+) +(\S+) +\d+ +\S+ +(\d+) +(\S+)"
+    with open(output, "w") as dest:
+        writer = csv.writer(dest)
+        writer.writerow(["switch", "mac", "ip", "vlan", "interface"])
+        for filename in filenames:
+            switch = filename.split("_")[0]
+            with open(filename) as f:
+                for line in f:
+                    match = re.search(regex, line)
+                    if match:
+                        writer.writerow((switch,) + match.groups())
 
+
+if __name__ == "__main__":
+    sh_dhcp_snoop_files = glob.glob("*_dhcp_snooping.txt")
+    write_dhcp_snooping_to_csv(sh_dhcp_snoop_files, "example_csv.csv")
 
