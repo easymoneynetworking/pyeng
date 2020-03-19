@@ -24,7 +24,7 @@ interface Loopback0
 """
 import re
 from pprint import pprint
-regex = r'interface (\w+[\d\/]+)'
+regex = r'interface (\S+\d+)'
 
 def get_ints_without_description(filename):
     all_interface = []
@@ -43,4 +43,22 @@ def get_ints_without_description(filename):
 
 print(get_ints_without_description('config_r1.txt'))
 
+
+
+# Все отлично, только пропустил один интерфейс, чтобы он попал надо переделать регулярку
+# interface Ethernet0/3.100
+#  encapsulation dot1Q 100
+#  xconnect 10.2.2.2 12100 encapsulation mpls
+#   backup peer 10.4.4.4 14100
+#   backup delay 1 1
+
+# вариант решения
+
+def get_ints_without_description2(config):
+    regex = re.compile(r"!\ninterface (?P<intf>\S+)\n"
+                       r"(?P<descr> description \S+)?")
+    with open(config) as src:
+        match = regex.finditer(src.read())
+        result = [m.group('intf') for m in match if m.lastgroup == 'intf']
+        return result
 
