@@ -37,10 +37,42 @@ C-3PO,c3po@gmail.com,16/12/2019 17:24
 """
 
 import datetime
-
+import re
+from pprint import pprint
+import csv
 
 def convert_datetimestr_to_datetime(datetime_str):
     """
     Конвертирует строку с датой в формате 11/10/2019 14:05 в объект datetime.
     """
     return datetime.datetime.strptime(datetime_str, "%d/%m/%Y %H:%M")
+
+def write_last_log_to_csv(source_log,output):
+    finish_dictionary = {}
+    finish_lists = []
+    with open(source_log) as f:
+        reader = csv.reader(f)
+        full_list_with_headers = list(reader)
+        full_list_withot_headers = full_list_with_headers[1::]
+        finish_lists.append(full_list_with_headers[0])
+        sorted_full_list = sorted(full_list_withot_headers, key=lambda x: convert_datetimestr_to_datetime(x[2]), reverse=True)
+        for all_list in sorted_full_list:
+            sorted_dictionary = {}
+            sorted_dictionary[all_list[1]] = [all_list[0],all_list[2]]
+            for key, values in sorted_dictionary.items():
+                if key not in finish_dictionary:
+                    finish_dictionary[key] = values
+        print(finish_dictionary)
+        for key2,values2 in finish_dictionary.items():
+            values2.insert(1, key2)
+            finish_lists.append(values2)
+        with open(output, 'w') as fi:
+            writer = csv.writer(fi)
+            for row in finish_lists:
+                writer.writerow(row)
+
+
+if __name__ == "__main__":
+    write_last_log_to_csv('mail_log.csv','ma_last_log.csv')
+
+
