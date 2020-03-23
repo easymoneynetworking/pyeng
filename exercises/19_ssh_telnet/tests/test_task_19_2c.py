@@ -68,7 +68,7 @@ def test_function_stdout(
     monkeypatch.setattr("builtins.input", lambda x=None: "y")
 
     return_value = task_19_2c.send_config_commands(
-        first_router_from_devices_yaml, [command], verbose=False
+        first_router_from_devices_yaml, [command], log=False
     )
 
     # Проверяем вывод информации об ошибках в stdout
@@ -91,7 +91,7 @@ def test_function_return_value_continue_yes(
     monkeypatch.setattr("builtins.input", lambda x=None: "y")
 
     return_value = task_19_2c.send_config_commands(
-        first_router_from_devices_yaml, test_commands, verbose=False
+        first_router_from_devices_yaml, test_commands, log=False
     )
 
     assert return_value != None, "Функция ничего не возвращает"
@@ -123,7 +123,7 @@ def test_function_return_value_continue_no(
     monkeypatch.setattr("builtins.input", lambda x=None: "n")
 
     return_value = task_19_2c.send_config_commands(
-        first_router_from_devices_yaml, commands, verbose=False
+        first_router_from_devices_yaml, commands, log=False
     )
 
     assert return_value != None, "Функция ничего не возвращает"
