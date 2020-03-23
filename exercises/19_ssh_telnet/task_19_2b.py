@@ -123,9 +123,6 @@ def send_config_commands(device,config_commands, log=True):
                 error = found_error.group()
                 first_dic[commands] = result
                 print(f"Команда {commands} выполнилась с ошибкой {error} на устройстве {device['ip']}")
-                question = input('Продолжать выполнять команды? [y]/n:')
-                if question == "n" or question == "no":
-                    break
             else:
                 second_dic[commands] = result
     return second_dic,first_dic
@@ -137,5 +134,5 @@ if __name__ == "__main__":
     with open('devices.yaml') as f:
         devices = yaml.safe_load(f)
         for dev in devices:
-            pprint(send_config_commands(dev,commands))
+            (send_config_commands(dev,commands))
 
