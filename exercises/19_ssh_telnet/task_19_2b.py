@@ -116,12 +116,16 @@ def send_config_commands(device,config_commands, log=True):
     with ConnectHandler(**device) as ssh:
         ssh.enable()
         for commands in config_commands:
+            pprint(commands)
             result = ssh.send_config_set(commands)
             found_error = re.search(regex_for_errors, result)
             if found_error:
                 error = found_error.group()
                 first_dic[commands] = result
                 print(f"Команда {commands} выполнилась с ошибкой {error} на устройстве {device['ip']}")
+                question = input('Продолжать выполнять команды? [y]/n:')
+                if question == "n" or question == "no":
+                    break
             else:
                 second_dic[commands] = result
     return second_dic,first_dic
