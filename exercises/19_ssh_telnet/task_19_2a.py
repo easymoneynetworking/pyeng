@@ -42,3 +42,6 @@ if __name__ == "__main__":
         for dev in devices:
             pprint(send_config_commands(dev,commands))
 
+
+# Все отлично
+

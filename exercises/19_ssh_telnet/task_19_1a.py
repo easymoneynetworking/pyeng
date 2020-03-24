@@ -23,6 +23,7 @@ def send_show_command(device,command):
             result = ssh.send_command(command)
         return result
 #            print(f"{device['ip']} \n{result}")
+    # писать просто except, без имени исключения очень плохой тон
     except:
         return print('Authentication failure: unable to connect')
 
@@ -32,4 +33,22 @@ if __name__ == "__main__":
         devices = yaml.safe_load(f)
     for dev in devices:
         pprint(send_show_command(dev,command))
+
+
+# Все отлично
+
+# вариант решения
+import yaml
+import sys
+from netmiko import ConnectHandler, NetMikoAuthenticationException
+
+
+def send_show_command(device, command):
+    try:
+        with ConnectHandler(**device) as ssh:
+            ssh.enable()
+            result = ssh.send_command(command)
+            return result
+    except NetMikoAuthenticationException as error:
+        print(error)
 

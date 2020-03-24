@@ -32,3 +32,6 @@ if __name__ == "__main__":
         devices = yaml.safe_load(f)
     for dev in devices:
         send_show_command(dev,command)
+
+# Все отлично
+

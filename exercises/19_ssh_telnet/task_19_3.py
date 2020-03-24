@@ -37,7 +37,7 @@ from netmiko import Netmiko
 from task_19_1 import send_show_command
 from task_19_2 import send_config_commands 
 
-def send_commands(device,show=None,config=None):
+def send_commands(device, show=None, config=None):
     if show:
         result = send_show_command(device,show)
         return result
@@ -53,3 +53,6 @@ if __name__ == "__main__":
         devices = yaml.safe_load(f)
         for dev in devices:
             pprint(send_commands(dev,config=commands))
+
+# Все отлично
+
