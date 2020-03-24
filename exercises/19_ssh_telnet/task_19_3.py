@@ -30,6 +30,26 @@ Out[14]: '*17:06:12.278 UTC Wed Mar 13 2019'
 In [15]: send_commands(r1, config=['username user5 password pass5', 'username user6 password pass6'])
 Out[15]: 'config term\nEnter configuration commands, one per line.  End with CNTL/Z.\nR1(config)#username user5 password pass5\nR1(config)#username user6 password pass6\nR1(config)#end\nR1#'
 """
+import yaml
+from pprint import pprint
+from netmiko import ConnectHandler
+from netmiko import Netmiko
+from task_19_1 import send_show_command
+from task_19_2 import send_config_commands 
 
-commands = ["logging 10.255.255.1", "logging buffered 20010", "no logging console"]
-command = "sh ip int br"
+def send_commands(device,show=None,config=None):
+    if show:
+        result = send_show_command(device,show)
+        return result
+    elif config:
+        result = send_config_commands(device,config)
+        return result
+
+
+if __name__ == "__main__":
+    commands = ["logging 10.255.255.1", "logging buffered 20010", "no logging console"]
+    command = "sh ip int br"
+    with open('devices.yaml') as f:
+        devices = yaml.safe_load(f)
+        for dev in devices:
+            pprint(send_commands(dev,config=commands))

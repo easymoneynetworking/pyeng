@@ -94,7 +94,45 @@ R1(config)#a
 """
 
 # списки команд с ошибками и без:
-commands_with_errors = ["logging 0255.255.1", "logging", "a"]
-correct_commands = ["logging buffered 20010", "ip http server"]
+#commands_with_errors = ["logging 0255.255.1", "logging", "a"]
+#correct_commands = ["logging buffered 20010", "ip http server"]
 
-commands = commands_with_errors + correct_commands
+#commands = commands_with_errors + correct_commands
+
+
+import yaml
+from pprint import pprint
+from netmiko import ConnectHandler
+from netmiko import Netmiko
+import re
+
+
+def send_config_commands(device,config_commands, log=True):
+    first_dic = {}
+    second_dic = {}
+    if log:
+        print('Подключаюсь к {}'.format(device['ip']))
+    regex_for_errors = r'(% .*)'
+    with ConnectHandler(**device) as ssh:
+        ssh.enable()
+        for commands in config_commands:
+            pprint(commands)
+            result = ssh.send_config_set(commands)
+            found_error = re.search(regex_for_errors, result)
+            if found_error:
+                error = found_error.group()
+                first_dic[commands] = result
+                print(f"Команда {commands} выполнилась с ошибкой {error} на устройстве {device['ip']}")
+            else:
+                second_dic[commands] = result
+    return second_dic,first_dic
+
+if __name__ == "__main__":
+    commands_with_errors = ["logging 0255.255.1", "logging", "a"]
+    correct_commands = ["logging buffered 20010", "ip http server"]
+    commands = commands_with_errors + correct_commands
+    with open('devices.yaml') as f:
+        devices = yaml.safe_load(f)
+        for dev in devices:
+            (send_config_commands(dev,commands))
+
