@@ -31,3 +31,29 @@
 > pip install graphviz
 
 """
+import re
+from pprint import pprint
+import yaml
+from draw_network_graph import draw_topology
+
+def transform_topology(yml_file):
+    dictionary = {}
+    finish_dictionary = {}
+    with open(yml_file) as f:
+        templates = yaml.safe_load(f)
+        for k, value in templates.items():
+            keys1 = k
+            for k2,value2 in value.items():
+                keys2 = (keys1,k2)
+                for k3,value3 in value2.items():
+                    dictionary[keys2] = (k3,value3)
+    for k4,value4 in dictionary.items():
+        if not dictionary.get(value4) == k4:
+            finish_dictionary[k4] = value4
+#                pprint(keys2)
+    return finish_dictionary
+
+if __name__ == "__main__":
+    infiles = 'cdp_neigbors.yml'
+    topology = transform_topology(infiles)
+    draw_topology(topology)
