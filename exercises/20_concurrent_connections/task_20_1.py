@@ -48,6 +48,5 @@ if __name__ == '__main__':
     lists_ip = ["1.1.1", "8.8.8.8", "8.8.4.4", "8.8.7.1"]
     pprint(ping_ip_addresses(lists_ip,3))
 
-
-
+# Все отлично
 
