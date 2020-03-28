@@ -47,9 +47,53 @@ O        10.30.0.0/24 [110/20] via 192.168.100.1, 07:12:03, Ethernet0/0
 
 Проверить работу функции на устройствах из файла devices.yaml и словаре commands
 """
+import subprocess
+from pprint import pprint
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from itertools import repeat
+import logging
+import netmiko
+import yaml
+logging.getLogger("paramiko").setLevel(logging.WARNING)
 
-commands = {
-    "192.168.100.1": ["sh ip int br", "sh arp"],
-    "192.168.100.2": ["sh arp"],
-    "192.168.100.3": ["sh ip int br", "sh ip route | ex -"],
-}
+def send_command_to_devices(devices,commands_dict,filename,limit=3):
+    with ThreadPoolExecutor(max_workers=limit) as executor:
+        future_list = []
+        for device in devices:
+            command = commands_dict[device['ip']]
+            future = executor.submit(show_command, device, command)
+            future_list.append(future)
+        with open(filename, 'w') as fi:
+            for f in as_completed(future_list):
+                results = f.result()
+                for f2 in results:
+                    fi.write(f2 + '\n')
+
+
+
+def show_command(devices, command):
+    spisok = []
+    spisok_command = []
+    logging.basicConfig(format = '%(threadName)s %(name)s %(levelname)s: %(message)s',level=logging.INFO)
+    with netmiko.ConnectHandler(**devices) as ssh:
+        ssh.enable()
+        device = ssh.find_prompt()
+        for list_commands in command:
+            device = ssh.find_prompt()
+            result = ssh.send_command(list_commands)
+            device_commands = device + list_commands
+            spisok.append(device_commands)
+            spisok.append(result)
+#            logging.info(result)
+    return spisok
+
+if __name__ == '__main__':
+    commands = {
+            "192.168.100.1": ["sh ip int br", "sh arp"],
+            "192.168.100.2": ["sh arp"],
+            "192.168.100.3": ["sh ip int br", "sh ip route | ex -"],
+    }
+    with open('devices.yaml') as f:
+        devices = yaml.safe_load(f)
+    send_command_to_devices(devices, commands, 'test.txt')
+

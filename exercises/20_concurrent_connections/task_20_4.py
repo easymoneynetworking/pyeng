@@ -82,3 +82,61 @@ R3#
 
 Для выполнения задания можно создавать любые дополнительные функции.
 """
+
+
+from pprint import pprint
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from itertools import repeat
+import logging
+import netmiko
+import yaml
+logging.getLogger("paramiko").setLevel(logging.WARNING)
+
+def send_commands_to_devices(devices,filename,show=None,config=None,limit=3):
+    with ThreadPoolExecutor(max_workers=limit) as executor:
+        future_list = []
+        for device in devices:
+            future = executor.submit(show_command, device,show,config)
+            future_list.append(future)
+        with open(filename, 'w') as fi:
+            for f in as_completed(future_list):
+                if show:
+                    output = f.result()
+                    header = output[0] + show
+                    command_output = output[1]
+                    fi.write(header + '\n')
+                    fi.write(command_output + '\n')
+                elif config:
+                    output = f.result()
+                    fi.write(output + '\n')
+
+
+
+
+
+def show_command(devices, show=None,config=None):
+    logging.basicConfig(format = '%(threadName)s %(name)s %(levelname)s: %(message)s',level=logging.INFO)
+    with netmiko.ConnectHandler(**devices) as ssh:
+        ssh.enable()
+        if show:
+            device = ssh.find_prompt()
+            result_show = ssh.send_command(show)
+            return device,result_show
+        elif config:
+            result_config = ssh.send_config_set(config)
+            return result_config
+
+
+if __name__ == '__main__':
+    with open('devices.yaml') as f:
+        devices = yaml.safe_load(f)
+    send_commands_to_devices(devices, config='logging 10.5.5.5', filename='test.txt')
+
+
+
+
+
+
+
+
+

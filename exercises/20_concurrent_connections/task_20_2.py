@@ -33,3 +33,39 @@ Ethernet0/1                unassigned      YES NVRAM  administratively down down
 
 Проверить работу функции на устройствах из файла devices.yaml
 """
+import subprocess
+from pprint import pprint
+from concurrent.futures import ThreadPoolExecutor
+from itertools import repeat
+import logging
+import netmiko
+import yaml
+
+logging.getLogger("paramiko").setLevel(logging.WARNING)
+
+def send_show_command_to_devices(devices,command,filename,limit=3):
+    finish_list = []
+    with ThreadPoolExecutor(max_workers=limit) as executor:
+        result = executor.map(show_command, devices, repeat(command))
+        with open(filename, 'w') as f:
+            for device, output in result:
+                header = device+command
+                f.write(header + '\n')
+                f.write(output + '\n')
+
+
+def show_command(devices, command):
+    logging.basicConfig(
+            format = '%(threadName)s %(name)s %(levelname)s: %(message)s',
+            level=logging.INFO)
+    with netmiko.ConnectHandler(**devices) as ssh:
+        ssh.enable()
+        device = ssh.find_prompt()
+#        logging.info(device)
+        result = ssh.send_command(command)
+    return device,result
+
+if __name__ == '__main__':
+     with open('devices.yaml') as f:
+         devices = yaml.safe_load(f)
+     send_show_command_to_devices(devices, 'sh ip int br', 'test.txt')
