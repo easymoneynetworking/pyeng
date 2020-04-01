@@ -20,7 +20,7 @@ from pprint import pprint
 import os
 
 
-def generate_config(template,data_dict):
+def generate_config(template, data_dict):
     templ_dir, templ_file = os.path.split(template)
     env = Environment(
         loader=FileSystemLoader(templ_dir), trim_blocks=True, lstrip_blocks=True
@@ -36,3 +36,6 @@ if __name__ == '__main__':
     with open(data_file) as f:
         data = yaml.safe_load(f)
     pprint(generate_config(template_file,data))
+
+# Все отлично
+

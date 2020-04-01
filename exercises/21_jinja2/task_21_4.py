@@ -38,3 +38,6 @@ template_file = 'templates/add_vlan_to_switch.txt'
 with open(data_file) as f:
         data = yaml.safe_load(f)
         pprint(generate_config(template_file,data))
+
+# Все отлично
+
