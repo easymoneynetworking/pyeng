@@ -37,3 +37,15 @@
 
 
 """
+import yaml
+from pprint import pprint
+from task_21_1 import generate_config
+
+data_file = 'data_files/ospf.yml'
+template_file = 'templates/ospf.txt'
+with open(data_file) as f:
+        data = yaml.safe_load(f)
+        pprint(generate_config(template_file,data))
+
+
+

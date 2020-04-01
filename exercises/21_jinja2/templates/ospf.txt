@@ -1,0 +1,26 @@
+router ospf {{ process }}
+ router-id {{ router_id  }}
+ auto-cost reference-bandwidth {{ ref_bw }}
+ {% for networks in ospf_intf %}
+ network {{ networks.ip }} 0.0.0.255 area {{ networks.area }}
+ {% endfor %}
+ {% for networks in ospf_intf %}
+  {% if networks.passive == True  %}
+    {% if networks.name[0:2] == 'Fa'  %}
+ passive-interface FastEthernet{{ networks.name[2:] }}
+    {% elif networks.name[0:2] == 'Gi'  %}
+ passive-interface gigabitethernet{{ networks.name[2:] }}
+    {% else  %}
+ passive-interface Vlan{{ networks.name[2:] }}
+    {% endif %}
+  {% endif %}
+ {% endfor %}
+
+
+ {% for networks in ospf_intf %}
+  {% if networks.passive == False  %}
+interface FastEthernet{{ networks.name[2:] }}
+ ip ospf hello-interval 1
+  {% endif %}
+ {% endfor %}
+
