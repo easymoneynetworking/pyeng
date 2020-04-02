@@ -26,7 +26,7 @@ import clitable
 
 def send_and_parse_show_command(device_dict, command, templates_path, index='index'):
     finish_dic = {}
-    attributes = {'Command': 'sh ip int br' , 'Vendor': 'cisco_ios'}
+    attributes = {'Command': command , 'Vendor': 'cisco_ios'}
     with ConnectHandler(**device_dict) as ssh:
         ssh.enable()
         result = ssh.send_command(command)

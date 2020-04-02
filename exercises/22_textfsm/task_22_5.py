@@ -13,3 +13,24 @@
 
 Теста для этого задания нет.
 """
+
+import yaml
+from pprint import pprint
+from itertools import repeat
+from concurrent.futures import ThreadPoolExecutor
+from task_22_4 import send_and_parse_show_command
+
+def send_and_parse_command_parallel(devices, command, templates_path):
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        result = executor.map(send_and_parse_show_command, devices, templates_path, repeat(command))
+        return resul
+
+
+
+
+if __name__ == "__main__":
+    command = "sh ip int br"
+    with open('devices.yaml') as f:
+        devices = yaml.safe_load(f)
+        for dev in devices:
+            pprint(send_and_parse_show_command(dev, command, 'templates'))
