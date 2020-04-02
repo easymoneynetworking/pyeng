@@ -19,3 +19,24 @@
 
 Проверить работу функции на примере вывода команды sh ip int br и устройствах из devices.yaml.
 """
+import yaml
+from pprint import pprint
+from netmiko import ConnectHandler
+import clitable
+
+def send_and_parse_show_command(device_dict, command, templates_path, index='index'):
+    finish_dic = {}
+    attributes = {'Command': 'sh ip int br' , 'Vendor': 'cisco_ios'}
+    with ConnectHandler(**device_dict) as ssh:
+        ssh.enable()
+        result = ssh.send_command(command)
+        cli_table = clitable.CliTable(index, templates_path)
+        cli_table.ParseCmd(result, attributes)
+        return [dict(zip(cli_table.header, item)) for item in cli_table]
+
+if __name__ == "__main__":
+    command = "sh ip int br"
+    with open('devices.yaml') as f:
+        devices = yaml.safe_load(f)
+        pprint(send_and_parse_show_command(devices[0], command, 'templates', 'index'))
+
