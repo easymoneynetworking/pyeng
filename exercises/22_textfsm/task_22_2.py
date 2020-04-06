@@ -21,3 +21,5 @@ from pprint import pprint
 with open('output/sh_ip_dhcp_snooping.txt') as output:
     outputs = output.read()
     pprint(parse_command_output('templates/sh_ip_dhcp_snooping.template', outputs))
+
+# Все отлично

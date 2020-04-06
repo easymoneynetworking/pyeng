@@ -27,12 +27,10 @@ def parse_output_to_dict(template, command_output):
         return [dict(zip(header, i)) for i in result]
 
 
-
-
-
-
-
 if __name__ == '__main__':
     with open('output/sh_ip_int_br.txt') as output:
         outputs = output.read()
         pprint(parse_output_to_dict('templates/sh_ip_int_br.template', outputs))
+
+# Все отлично
+

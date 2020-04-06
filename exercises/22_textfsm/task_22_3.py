@@ -36,3 +36,6 @@ if __name__ == "__main__":
         outputs = output.read()
         pprint(parse_command_dynamic(outputs, attributes_dict))
 
+
+# Все отлично
+
