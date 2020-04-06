@@ -52,8 +52,8 @@ def configure_vpn(src_device_params, dst_device_params, src_template, dst_templa
     commands = {}
     src_dest_dev = []
     ##Получаю словарь commands  вида {ipаддрес: команды(в виде строк)}
-    commands[src_device_params['ip']] = str_template1
-    commands[dst_device_params['ip']] = str_template2
+    commands[src_device_params['ip']] = str_template1.split("\n")
+    commands[dst_device_params['ip']] = str_template2.split("\n")
     ##Обьединяю два словаря с параметрами подключения
     ##и создаю список из словарей src_dest_dev
     src_dest_dev = [src_device_params]
@@ -65,6 +65,7 @@ def configure_vpn(src_device_params, dst_device_params, src_template, dst_templa
             future_list.append(future)
         for f in as_completed(future_list):
             results = f.result()
+    return results
 
 def find_tunnel_number(src_template, dst_template):
     '''
@@ -119,5 +120,5 @@ if __name__ == '__main__':
         device1 = yaml.safe_load(f)
     with open('devices2.yml') as f:
         device2 = yaml.safe_load(f)
-        configure_vpn(device1, device2, 'templates/gre_ipsec_vpn_1.txt', 'templates/gre_ipsec_vpn_2.txt', data)
+        pprint(configure_vpn(device1, device2, 'templates/gre_ipsec_vpn_1.txt', 'templates/gre_ipsec_vpn_2.txt', data))
 
