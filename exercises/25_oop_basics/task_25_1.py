@@ -29,6 +29,14 @@ Out[3]:
 
 
 """
+from pprint import pprint
+
+class Topology:
+    def __init__(self, topology_dic):
+        self.topology = {}
+        for key,value in topology_dic.items():
+            if not self.topology.get(value) == key:
+                self.topology[key] = value
 
 topology_example = {
     ("R1", "Eth0/0"): ("SW1", "Eth0/1"),
@@ -41,3 +49,5 @@ topology_example = {
     ("SW1", "Eth0/2"): ("R2", "Eth0/0"),
     ("SW1", "Eth0/3"): ("R3", "Eth0/0"),
 }
+top = Topology(topology_example)
+pprint(top.topology)
