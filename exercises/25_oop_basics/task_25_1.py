@@ -51,3 +51,6 @@ topology_example = {
 }
 top = Topology(topology_example)
 pprint(top.topology)
+
+# Все отлично
+
