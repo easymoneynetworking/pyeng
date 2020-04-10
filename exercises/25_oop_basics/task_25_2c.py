@@ -60,3 +60,88 @@ ValueError                                Traceback (most recent call last)
 ValueError: При выполнении команды "logging 0255.255.1" на устройстве 192.168.100.1 возникла ошибка -> Invalid input detected at '^' marker.
 
 """
+import telnetlib
+import time
+from pprint import pprint
+import textfsm
+import clitable
+import re
+
+class CiscoTelnet:
+    def __init__(self, ip, username, password, secret):
+        self.ip = ip
+        self.telnet = telnetlib.Telnet(ip)
+        self.telnet.read_until(b'Username:')
+        self._write_line(username)
+
+        self.telnet.read_until(b'Password:')
+        self._write_line(password)
+        self.telnet.write(b'enable\n')
+
+        self.telnet.read_until(b'Password:')
+        self._write_line(secret)
+        self._write_line('terminal length 0')
+
+        time.sleep(0.5)
+        self.telnet.read_very_eager()
+
+    def _write_line(self, string):
+        self.telnet.write(string.encode("utf-8") + b"\n")
+
+    def send_show_command(self, command, parse=False, index_file='index', templates='templates'):
+        self._write_line(command)
+        time.sleep(1)
+        output = self.telnet.read_very_eager().decode('utf-8')
+        self.telnet.close()
+        if parse == False:
+            return output
+        elif parse == True:
+            attributes = {'Command': command , 'Vendor': 'cisco_ios' }
+            finish_dic = {}
+            cli_table = clitable.CliTable(index_file, templates)
+            cli_table.ParseCmd(output, attributes)
+            return[dict(zip(cli_table.header, item)) for item in cli_table]
+
+    def send_config_commands(self, commands, strict=True):
+        self.telnet.write(b"conf t\n")
+        if type(commands) == str:
+            commands = [commands]
+        regex_for_errors = r'% (.*)'
+        for command in commands:
+            self._write_line(command)
+        time.sleep(0.5)
+        output = self.telnet.read_very_eager().decode('utf-8')
+        found_error = re.search(regex_for_errors, output)
+        if strict==True and found_error:
+            error = found_error.group(1)
+            if 'Invalind input detected' in output:
+                raise ValueError(f'При выполнении команды {command} на устройстве {self.ip} возникла ошибка {error}')
+            elif 'Incomplete command' in output:
+                raise ValueError(f'При выполнении команды {command} на устройстве {self.ip} возникла ошибка {error}')
+            elif 'Ambigious command':
+                raise ValueError(f'При выполнении команды {command} на устройстве {self.ip} возникла ошибка {error} ')
+        elif strict==False and found_error:
+            error = found_error.group(1)
+            if 'Invalind input detected' in output:
+                print(f'При выполнении команды {command} на устройстве {self.ip} возникла ошибка {error}')
+                return output
+            elif 'Incomplete command' in output:
+                print(f'При выполнении команды {command} на устройстве {self.ip} возникла ошибка {error}')
+                return output
+            elif 'Ambigious command':
+                print(f'При выполнении команды {command} на устройстве {self.ip} возникла ошибка {error} ')
+                return output
+        else:
+            return output
+
+
+r1_params = {
+'ip': '192.168.100.1',
+'username': 'cisco',
+'password': 'cisco',
+'secret': 'cisco'}
+
+r1 = CiscoTelnet(**r1_params)
+#result = r1.send_show_command('sh ip int br', parse=True)
+results = r1.send_config_commands('logging 0255.255.1', strict = False)
+pprint(results)
