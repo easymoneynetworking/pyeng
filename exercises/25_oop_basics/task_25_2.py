@@ -57,7 +57,6 @@ class CiscoTelnet:
         self._write_line(command)
         time.sleep(1)
         output = self.telnet.read_very_eager().decode('utf-8')
-        self.telnet.close()
         return output
 
 r1_params = {
@@ -68,4 +67,10 @@ r1_params = {
 
 r1 = CiscoTelnet(**r1_params)
 result = r1.send_show_command('sh ip int br')
+# не надо закрывать соединение внутри метода, надо или закрыть так
+# или сделать метод close и использовать его
+r1.telnet.close()
 pprint(result)
+
+# Все отлично
+

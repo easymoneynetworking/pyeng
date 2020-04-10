@@ -97,11 +97,10 @@ class CiscoTelnet:
         self._write_line(command)
         time.sleep(1)
         output = self.telnet.read_very_eager().decode('utf-8')
-        self.telnet.close()
         if parse == False:
             return output
         elif parse == True:
-            attributes = {'Command': command , 'Vendor': 'cisco_ios' }
+            attributes = {'Command': command , 'Vendor': 'cisco_ios'}
             finish_dic = {}
             cli_table = clitable.CliTable(index_file, templates)
             cli_table.ParseCmd(output, attributes)
@@ -115,5 +114,9 @@ r1_params = {
 
 r1 = CiscoTelnet(**r1_params)
 result = r1.send_show_command('sh ip int br', parse=True)
+r1.telnet.close()
 pprint(result)
+
+
+# Все отлично
 
