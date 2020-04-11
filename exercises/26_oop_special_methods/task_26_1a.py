@@ -28,6 +28,7 @@ In [2]: for link in top:
 
 Проверить работу класса.
 """
+from pprint import pprint
 
 topology_example = {
     ("R1", "Eth0/0"): ("SW1", "Eth0/1"),
@@ -40,3 +41,28 @@ topology_example = {
     ("SW1", "Eth0/2"): ("R2", "Eth0/0"),
     ("SW1", "Eth0/3"): ("R3", "Eth0/0"),
 }
+
+class Topology:
+    def __init__(self, topology_dict):
+        self.topology = self._normalize(topology_dict)
+
+    def _normalize(self, topology_dict):
+        topology_dic = {}
+        for key,value in topology_dict.items():
+            if not topology_dic.get(value) == key:
+                topology_dic[key] = value
+        return topology_dic
+
+    def __add__(self, other):
+        sum_dic = self.topology.copy()
+        sum_dic.update(other.topology)
+        return Topology(sum_dic)
+
+    def __iter__(self):
+        return iter(self.topology)
+
+
+top = Topology(topology_example)
+for iters in top:
+    pprint(iters)
+
