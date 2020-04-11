@@ -58,6 +58,7 @@ Out[9]:
 In [10]: t2.topology
 Out[10]: {('R1', 'Eth0/4'): ('R7', 'Eth0/0'), ('R1', 'Eth0/6'): ('R9', 'Eth0/0')}
 """
+from pprint import pprint
 
 topology_example = {
     ("R1", "Eth0/0"): ("SW1", "Eth0/1"),
@@ -75,3 +76,26 @@ topology_example2 = {
     ("R1", "Eth0/4"): ("R7", "Eth0/0"),
     ("R1", "Eth0/6"): ("R9", "Eth0/0"),
 }
+
+class Topology:
+        def __init__(self, topology_dict):
+            self.topology = self._normalize(topology_dict)
+
+        def _normalize(self, topology_dict):
+            topology_dic = {}
+            for key,value in topology_dict.items():
+                if not topology_dic.get(value) == key:
+                    topology_dic[key] = value
+            return topology_dic
+        def __add__(self, other):
+            sum_dic = self.topology.copy()
+            sum_dic.update(other.topology)
+            return Topology(sum_dic)
+
+
+t1 = Topology(topology_example)
+t1.topology
+t2 = Topology(topology_example2)
+t2.topology
+t3 = t1 + t2
+pprint(t3.topology)
