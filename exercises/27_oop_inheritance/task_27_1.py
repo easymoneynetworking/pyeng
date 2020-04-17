@@ -25,3 +25,16 @@ device_params = {
     "password": "cisco",
     "secret": "cisco",
 }
+
+from base_connect_class import BaseSSH
+from pprint import pprint
+
+class CiscoSSH(BaseSSH):
+    def __init__(self, **device_params):
+        super().__init__(**device_params)
+        self.ssh.enable()
+
+
+r1 = CiscoSSH(**device_params)
+result = r1.send_show_command('sh ip int br')
+pprint(result)
