@@ -32,3 +32,41 @@ In [12]: print(ip_list)
 
 Для этого задания нет теста!
 """
+from pprint import pprint
+
+
+class IPAddress:
+    def __init__(self, ip):
+        address, mask = ip.split("/")
+        self._check_correct_address(address)
+        self._check_correct_mask(mask)
+        self.ip = address
+        self.mask = int(mask)
+
+    def __str__(self):
+        return f"IP address {self.ip}/{self.mask}"
+
+    def __repr__(self):
+        return f"IP address('{self.ip}/{self.mask}')"
+
+    def _check_correct_address(self, address):
+        octets = address.split(".")
+        correct_ip = True
+        if len(octets) != 4:
+            correct_ip = False
+        else:
+            for octet in octets:
+                if not (octet.isdigit() and int(octet) in range(256)):
+                    correct_ip = False
+                    break
+        if not correct_ip:
+            raise ValueError('Incorrect IPv4 address')
+
+    def _check_correct_mask(self, mask):
+        if not int(mask) in range(8,33):
+            raise ValueError('Incorrect mask')
+
+ip1 = IPAddress('10.1.26.1/24')
+ip_list = []
+ip_list.append(ip1)
+pprint(ip_list)
