@@ -20,6 +20,16 @@ Out[4]: 'Interface                  IP-Address      OK? Method Status           
 
 """
 
+from netmiko.cisco.cisco_ios import CiscoIosBase
+from pprint import pprint
+
+class MyNetmiko(CiscoIosBase):
+    def __init__(self, **device_params):
+        super().__init__(**device_params)
+        self.enable()
+
+
+
 device_params = {
     "device_type": "cisco_ios",
     "ip": "192.168.100.1",
@@ -27,3 +37,6 @@ device_params = {
     "password": "cisco",
     "secret": "cisco",
 }
+r1 = MyNetmiko(**device_params)
+result = r1.send_command('sh ip int br')
+pprint(result)
