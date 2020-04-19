@@ -81,3 +81,6 @@ class IPAddress:
 #ip = IPAddress('10.1.26.1/24')
 ip1 = IPAddress('10.1.26.1/24')
 pprint(ip1.mask)
+
+# Все отлично
+

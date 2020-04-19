@@ -86,3 +86,6 @@ r1_params = {
 
 with CiscoTelnet(**r1_params) as r1:
     print(r1.send_show_command('sh ip int br'))
+
+# Все отлично
+

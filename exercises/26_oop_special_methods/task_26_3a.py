@@ -70,3 +70,6 @@ ip1 = IPAddress('10.1.26.1/24')
 ip_list = []
 ip_list.append(ip1)
 pprint(ip_list)
+
+# Все отлично
+
