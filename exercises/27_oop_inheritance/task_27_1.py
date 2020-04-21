@@ -38,3 +38,6 @@ class CiscoSSH(BaseSSH):
 r1 = CiscoSSH(**device_params)
 result = r1.send_show_command('sh ip int br')
 pprint(result)
+
+# Все отлично
+

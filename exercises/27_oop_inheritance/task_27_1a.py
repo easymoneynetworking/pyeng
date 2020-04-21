@@ -48,3 +48,43 @@ if __name__ == "__ main__":
     result = r1.send_show_command('sh ip int br')
     pprint(result)
 
+
+# Все отлично
+
+# вариант решения
+
+from base_connect_class import BaseSSH
+from getpass import getpass
+
+
+class CiscoSSH(BaseSSH):
+    def __init__(self, **device_params):
+        params = {
+            "username": "Введите имя пользователя: ",
+            "password": "Введите пароль: ",
+            "secret": "Введите пароль для режима enable: ",
+        }
+        for param in params:
+            if not param in device_params:
+                if param == "username":
+                    device_params["username"] = input(params[param])
+                else:
+                    device_params[param] = getpass(params[param])
+        super().__init__(**device_params)
+        self.ssh.enable()
+
+
+# еще один вариант
+class CiscoSSH(BaseSSH):
+    def __init__(self, **device_params):
+        params = {
+            "username": (input, "Введите имя пользователя: "),
+            "password": (getpass, "Введите пароль: "),
+            "secret": (getpass, "Введите пароль для режима enable: "),
+        }
+        for param in params:
+            if not param in device_params:
+                function, question = params[param]
+                device_params[param] = function(question)
+        super().__init__(**device_params)
+        self.ssh.enable()

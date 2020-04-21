@@ -71,3 +71,6 @@ if __name__ == "__main__":
     result = r1.send_command('sh ip int br', strip_command=True)
     pprint(result)
 
+
+# Все отлично
+

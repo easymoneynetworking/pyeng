@@ -40,3 +40,6 @@ device_params = {
 r1 = MyNetmiko(**device_params)
 result = r1.send_command('sh ip int br')
 pprint(result)
+
+# Все отлично
+
